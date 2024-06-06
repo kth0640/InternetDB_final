@@ -35,13 +35,12 @@
 			
 			<button type="submit" class="btn btn-primary" style="margin-top:5px; width:100%">로그인</button>
 			<div class="links" style="text-align:center; margin-top:5px">
-            <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> 
+            <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> |<a href="./userRegister.jsp">회원가입</a>
 
         </div>
 		</form>
 		
 	</section>
-	
 	
 	<!-- 제이쿼리 자바스크립트 추가하기 -->
 	<script src="../js/jquery.min.js"></script>

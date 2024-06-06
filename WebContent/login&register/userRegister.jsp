@@ -31,7 +31,7 @@
 	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, intital-scale=1, shrink-to-fit=no">
-	<title>강의평가 웹 사이트</title>
+	<title>회원가입</title>
 	<!-- 부트스트랩 CSS 추가하기 -->
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<!-- custom CSS 추가하기 -->
@@ -60,18 +60,14 @@
 					<input type="text" class="form-control" name="phone" oninput="oninputPhone(this)" maxlength="14">
 				</div>
 			
-			
-			
 			<div class="form-group">
 				<lable>주소</lable>
 				<input type="text" name="adress" class="form-control">
 			</div>
 			
-			
 			<button type="submit" class="btn btn-primary" style="margin-top:10px;border:none">회원가입</button>
 			<input type="reset" id="reset_button" class="btn btn-primary" value="재입력" >
 		</form>
-		
 	</section>
 	
 	
