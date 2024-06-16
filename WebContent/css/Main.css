@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+    animation: colorChange 10s infinite;
+}
+
+@keyframes colorChange {
+    0% { background-color: #007bff; }
+    25% { background-color: #6c757d; }
+    50% { background-color: #28a745; }
+    75% { background-color: #ffc107; }
+    100% { background-color: #007bff; }
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;  /* 버튼과 제목 사이에 공간 추가 */
+}
+
+.nav-buttons button {
+    background-color: #fff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.nav-buttons button:hover {
+    background-color: #007bff;
+    color: white;
+}

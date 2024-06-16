@@ -35,7 +35,9 @@
 			
 			<button type="submit" class="btn btn-primary" style="margin-top:5px; width:100%">로그인</button>
 			<div class="links" style="text-align:center; margin-top:5px">
-            <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> |<a href="./userRegister.jsp">회원가입</a>
+            <a href="../findUserInfo/findUserID.jsp">아이디 찾기</a> 
+           |<a href="../findUserInfo/findUserPassword.jsp">비밀번호 찾기</a> 
+           |<a href="./userRegister.jsp">회원가입</a>
 
         </div>
 		</form>
