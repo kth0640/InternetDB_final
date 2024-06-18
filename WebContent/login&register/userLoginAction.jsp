@@ -18,7 +18,7 @@
 		userPassword = request.getParameter("userPassword");
 	}
 	
-	if(userID == null || userPassword == null ){
+	if(userID == null||userID.isEmpty()  || userPassword == null || userPassword.isEmpty()){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력이 안된 사항이 있습니다.');");

@@ -19,7 +19,7 @@
 		phone = request.getParameter("phone");
 	}
 	
-	if(userEmail == null || phone == null ){
+	if(userEmail == null || userEmail.isEmpty() || phone == null || phone.isEmpty() ){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력이 안된 사항이 있습니다.');");

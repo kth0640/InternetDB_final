@@ -25,7 +25,7 @@
 	
 
 	
-	if( changePassword == null || changePasswordCheck == null){
+	if( changePassword == null || changePassword.isEmpty() || changePasswordCheck == null || changePasswordCheck.isEmpty()){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력이 안된 사항이 있습니다.');");

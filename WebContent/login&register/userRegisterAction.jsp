@@ -34,7 +34,11 @@
 	System.out.println("phone: "+phone);
 	System.out.println("adress: "+adress);
 	
-	if(userID == null || userPassword == null || userEmail == null || phone == null || adress == null){
+	if(userID == null ||userID.isEmpty() 
+			|| userPassword == null||userPassword.isEmpty() 
+			|| userEmail == null || userEmail.isEmpty()
+			|| phone == null || phone.isEmpty()
+			|| adress == null || adress.isEmpty() ){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력이 안된 사항이 있습니다.');");

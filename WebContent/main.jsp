@@ -19,7 +19,7 @@
         </div>
     </header><br><br><br><br>
     <div class="button-container" style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-        <button style="color: white; border-radius: 50%; width: 300px; height: 300px; border: none; font-size: 48px; cursor: pointer; margin: 20px; background-color: lightgreen; margin:100px;" onclick="location.href='addProduct/addProduct.jsp'">상품 등록</button>
+        <button style="color: white; border-radius: 50%; width: 300px; height: 300px; border: none; font-size: 48px; cursor: pointer; margin: 20px; background-color: lightgreen; margin:100px;" onclick="location.href='addProduct/addProduct2.jsp'">상품 등록</button>
         <button style="color: white; border-radius: 50%; width: 300px; height: 300px; border: none; font-size: 48px; cursor: pointer; margin: 20px; background-color: lightblue; margin:100px;" onclick="location.href='showProduct/showProduct.jsp'">상품 보기</button>
     </div>
 </body>
