@@ -50,6 +50,9 @@ public class ProductDTO {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	public ProductDTO() {
+		
+	}
 	public ProductDTO(int productID, String userID, String title, String price, String content, int createdAt,
 			String imageUrl) {
 		super();

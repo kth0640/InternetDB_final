@@ -3,14 +3,14 @@ package product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import product.ProductDTO;
 import util.DatabaseUtil;
 
 public class ProductDAO {
 	
 	public int addProduct(ProductDTO product) { //회원가입
-		String SQL = "INSERT INTO product VALUES(PRODUCT_SEQ.nextval,?,?,?,?,to_date(sysdate,'yyyy-mm-dd'),?)";
+		String SQL = "INSERT INTO product VALUES(PRODUCT_SEQ.nextval,?,?,?,?,to_date(sysdate,'yy-mm-dd'),?)";
 		//insert into product values(PRODUCT_SEQ.nextval, 'pknu1234', '제목',가격, '내용', 날짜,'url');
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -39,5 +39,27 @@ public class ProductDAO {
 		
 		return -1;//상품등록 실패
 	}
+	public ProductDTO getProductById(int productId) {
+	     ProductDTO product = null;
+	     String query = "SELECT * FROM product WHERE productid = ?";
+
+	     try (Connection conn = DatabaseUtil.getConnection();
+	          PreparedStatement pstmt = conn.prepareStatement(query)) {
+	         pstmt.setInt(1, productId);
+	         ResultSet rs = pstmt.executeQuery();
+
+	         if (rs.next()) {
+	             product = new ProductDTO();
+	             product.setProductID(rs.getInt("productid"));
+	             product.setTitle(rs.getString("title"));
+	             product.setPrice(rs.getString("price"));
+	             product.setImageUrl(rs.getString("imageUrl"));
+	             product.setContent(rs.getString("product_content"));
+	         }
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+	     return product;
+	 }
 	 
 }
