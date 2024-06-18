@@ -2,73 +2,90 @@
 <%@ page import="java.sql.*, java.io.*" %>
 <%@ page isErrorPage="false" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.oreilly.servlet.*" %> 
+<%@ page import="com.oreilly.servlet.multipart.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
+<%@ page import="product.ProductDAO" %>
+<%@ page import="product.ProductDTO" %>
 
 <%
-    // 데이터베이스 연결 설정
-    String dbURL = "jdbc:oracle:thin:@localhost:1521"; // 데이터베이스 URL
-    String dbUser = "scott"; // 사용자 이름
-    String dbPass = "tiger"; // 비밀번호
+	
 
-    Connection conn = null;
-    PreparedStatement pstmt = null;
+	MultipartRequest multi = new MultipartRequest(request, "D:\\upload", 5*1024*1024, 
+			"utf-8",new DefaultFileRenamePolicy());
+	
+	String userID = null;
 
-    try {
-    	request.setCharacterEncoding("UTF-8");
-        // 폼 데이터 받기
-        String productName = request.getParameter("productName");
-        String productPrice = request.getParameter("productPrice");
-        String productDescription = request.getParameter("productDescription");
+	
+	if(session.getAttribute("userID") != null){
+		userID = (String) session.getAttribute("userID");
+	}
+	
+	
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 해주세요');");
+		script.println("location.href='../login&register/userLogin.jsp';");
+		script.println("</script>");
+		script.close();
+	}
+	
+	String title = null;
+	String price = null;
+	String content = null;
+	String imageUrl =null;
+	String file = null;
+	String filename = null;
+	String path = "D:\\upload\\";
+	
+	title  = multi.getParameter("title");
+	price  = multi.getParameter("price");
+	content  = multi.getParameter("content");
+	
+	if(title == null||title.isEmpty()  || price == null || price.isEmpty()|| content==null || content.isEmpty()){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('입력이 안된 사항이 있습니다.');");
+		script.println("history.back();");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	//url 생성
+	Enumeration files = multi.getFileNames();
+	file = (String)files.nextElement();
+	filename = multi.getFilesystemName(file);
+	imageUrl = path.concat(filename);
+	
+	
+	ProductDAO productDAO = new ProductDAO();
+	int result = productDAO.addProduct(new ProductDTO(0, userID, title, price, content, 0, imageUrl));
+	out.println(title+"<br>");
+	out.println(price+"<br>");
+	out.println(content+"<br>");
+	out.println(file+ "<br>");
+	out.println(filename+ "<br>");
+	out.println(imageUrl+ "<br>");
+	
+	if(result == -1){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('상품등록에 실패했습니다.');");
+		script.println("history.back();");
+		script.println("</script>");
+		script.close();
+		return;
+	}else{
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("location.href='../main.jsp';");
+		script.println("</script>");
+		script.close();
+	}
+	//public ProductDTO(int productID, String userID, String title, String price, String content, String createdAt,String imageUrl)
 
-        // 데이터베이스 연결
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-
-        // 자동 커밋 비활성화
-        conn.setAutoCommit(false);
-
-        // 시퀀스를 사용하여 PRODUCT_ID 자동으로 생성
-        String getProductIdSQL = "SELECT PRODUCT_SEQ.NEXTVAL FROM dual";
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(getProductIdSQL);
-        rs.next();
-        int productId = rs.getInt(1);
-
-        // SQL 쿼리 작성
-        String sql = "INSERT INTO products (product_id, product_name, price, description) VALUES (?, ?, ?, ?)";
-        pstmt = conn.prepareStatement(sql);
-
-        // 파라미터 설정
-        pstmt.setInt(1, productId);
-        pstmt.setString(2, productName);
-        pstmt.setDouble(3, Double.parseDouble(productPrice));
-        pstmt.setString(4, productDescription);
-
-        // 데이터 삽입
-        pstmt.executeUpdate();
-
-        // 커밋
-        conn.commit();
-
-        // 메인 페이지로 리다이렉트
-        response.sendRedirect("../Main.jsp");
-    } catch (SQLException sqle) {
-        sqle.printStackTrace();
-        if (conn != null) {
-            try {
-                conn.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        out.println("상품 추가 중 오류가 발생했습니다: " + sqle.getMessage());
-    } catch (ClassNotFoundException cnfe) {
-        cnfe.printStackTrace();
-        out.println("상품 추가 중 오류가 발생했습니다: " + cnfe.getMessage());
-    } finally {
-        if (pstmt != null) pstmt.close();
-        if (conn != null) {
-            conn.setAutoCommit(true); // 자동 커밋 모드 복원
-            conn.close();
-        }
-    }
+	
+	
 %>

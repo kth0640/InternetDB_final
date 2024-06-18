@@ -1,6 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 <html lang="ko">
+<%
+ String userID = null;
+if(session.getAttribute("userID") != null){
+	userID = (String) session.getAttribute("userID");
+}
+
+
+if(userID == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('로그인을 해주세요');");
+	script.println("location.href='../login&register/userLogin.jsp';");
+	script.println("</script>");
+	script.close();
+}
+
+%>
 <head>
     <meta charset="UTF-8">
     <title>상품 입력 폼</title>
@@ -53,15 +72,19 @@
     </style>
 </head>
 <body>
-    <form action="./processProduct.jsp" method="post">
+    <form action="./processProduct.jsp" method="post" enctype="multipart/form-data">
+        
+        <label for="productImage">상품 사진</label>
+    		<input type="file" name="fileName">
+        
         <label for="productName">상품 이름:</label>
-        <input type="text" id="productName" name="productName" required>
+        <input type="text" id="productName" name="title" required>
         
         <label for="productPrice">상품 가격:</label>
-        <input type="number" id="productPrice" name="productPrice" required>
+        <input type="number" id="productPrice" name="price" required>
         
         <label for="productDescription">상품 설명:</label>
-        <textarea id="productDescription" name="productDescription" required></textarea>
+        <textarea id="productDescription" name="content" required></textarea>
         
         <input type="submit" value="제출">
     </form>
