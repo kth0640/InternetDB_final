@@ -38,6 +38,9 @@ public class UserDTO {
 	public void setAdress(String adress) {
 		this.adress = adress;
 	}
+	public UserDTO() {
+		
+	}
 	
 	public UserDTO(String userID, String userPassword, String userEmail, String phone, String adress) {
 		super();

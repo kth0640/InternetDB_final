@@ -181,8 +181,8 @@ public class UserDAO {
 		return -2; //데이터베이스오류
 	}
 
-	public static ArrayList<String> showUserInfo(String userID) {
-		ArrayList<String> userInfo =  new ArrayList<>();
+	public static UserDTO showUserInfo(String userID) {
+		UserDTO userInfo = new UserDTO();
 		
 		
 		String SQL = "SELECT * FROM usertable WHERE userID=?";
@@ -197,11 +197,11 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			
 			rs.next();
-		
-			userInfo.add(rs.getString(1));
-			userInfo.add(rs.getString(3));
-			userInfo.add(rs.getString(4));
-			userInfo.add(rs.getString(5));
+			
+			userInfo.setUserID(rs.getString(1));
+			userInfo.setUserEmail(rs.getString(3));
+			userInfo.setPhone(rs.getString(4));
+			userInfo.setAdress(rs.getString(5));
 			
 			return userInfo;
 			
