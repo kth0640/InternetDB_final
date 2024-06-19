@@ -4,7 +4,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <%
-    String dbURL = "jdbc:oracle:thin:@//localhost:1521"; // 데이터베이스 URL
+    String dbURL = "jdbc:oracle:thin:@//localhost:1522"; // 데이터베이스 URL
     String dbUser = "scott"; // 사용자 이름
     String dbPass = "tiger"; // 비밀번호
 
