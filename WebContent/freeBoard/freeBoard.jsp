@@ -152,7 +152,7 @@
         <div class="records-container">
             <%
                 // 데이터베이스 연결 설정
-                String dbURL = "jdbc:oracle:thin:@//localhost:1521"; // 데이터베이스 URL, SID 대신 서비스 이름 사용
+                String dbURL = "jdbc:oracle:thin:@//localhost:1522"; // 데이터베이스 URL, SID 대신 서비스 이름 사용
                 String dbUser = "scott"; // 사용자 이름
                 String dbPass = "tiger"; // 비밀번호
 
