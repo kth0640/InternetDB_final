@@ -48,7 +48,7 @@ if (result == -1) {
 } else {
     PrintWriter script = response.getWriter();
     script.println("<script>");
-    script.println("window.location.href ='postDetail.jsp?productID"+ productID +"';");
+    script.println("window.location.href ='postDetail.jsp?"+ productID +"';");
     script.println("</script>");
     script.close();
 }

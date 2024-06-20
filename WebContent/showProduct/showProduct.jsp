@@ -154,7 +154,7 @@
                             </div>
                             <script>
                             	function postDetail(productId) {
-                            		window.location.href ='postDetail.jsp?productID' + productId;
+                            		window.location.href ='postDetail.jsp?' + productId;
                             	}
                             </script>
                 <%

@@ -1,19 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="product.ProductDAO" %>
 <%@ page import="product.ProductDTO" %>
 <%@ page import="java.lang.*" %>
 
 <%
+		request.setCharacterEncoding("UTF-8");
     String userID = null;
     if(session.getAttribute("userID") != null){
         userID = (String) session.getAttribute("userID");
     }
 
     String url = request.getQueryString();
-    System.out.println(url);
-    char id = url.charAt(url.length() - 1);
-    int productId = Integer.parseInt(String.valueOf(id));
+   
+    int productId = Integer.parseInt(String.valueOf(url));
     ProductDAO productDAO = new ProductDAO();
     ProductDTO product = productDAO.getProductById(productId);
 %>
