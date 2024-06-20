@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.sql.*" %>
+<%@ page isErrorPage="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,14 +44,57 @@
     <!-- Assets -->
     <a-assets>
       <a-asset-item id="palaceModel" src="<%= request.getContextPath() %>/assets/palace.glb"></a-asset-item>
-      <img id="1" src="<%= request.getContextPath() %>/images/item1.jpg">
-      <img id="2" src="<%= request.getContextPath() %>/images/item2.jpg">
-      <img id="3" src="<%= request.getContextPath() %>/images/item3.jpg">
-      <img id="4" src="<%= request.getContextPath() %>/images/item4.jpg">
-      <img id="5" src="<%= request.getContextPath() %>/assets/5.jpg">
-      <img id="6" src="<%= request.getContextPath() %>/assets/6.jpg">
-      <img id="7" src="<%= request.getContextPath() %>/assets/7.jpg">
-      <img id="8" src="<%= request.getContextPath() %>/assets/8.jpg">
+          <%
+                    // 데이터베이스 연결 설정
+                    String dbURL = "jdbc:oracle:thin:@localhost:1522"; // 데이터베이스 URL
+                    String dbUser = "scott"; // 사용자 이름
+                    String dbPass = "tiger"; // 비밀번호
+                    int i=1;
+
+                    Connection conn = null;
+                    Statement stmt = null;
+                    ResultSet rs = null;
+
+                    try {
+                        // 데이터베이스 연결
+                        Class.forName("oracle.jdbc.driver.OracleDriver");
+                        conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+
+                        // SQL 쿼리 작성
+                        String sql = "SELECT productID, userID, title, price, product_content, createdAt, imageUrl FROM product";
+							
+                        // SQL 쿼리 실행
+                        stmt = conn.createStatement();
+                        rs = stmt.executeQuery(sql);
+
+                        // 결과 처리 및 HTML 카드 생성
+                        while (rs.next()) {
+                        	 String productID = rs.getString("productID");
+                             String userID = rs.getString("userID");
+                             String title = rs.getString("title");
+                             String price = rs.getString("price");
+                             String productContent = rs.getString("product_content");
+                             Date createdAt = rs.getDate("createdAt");
+                             String imageUrl = rs.getString("imageUrl");
+                 %>
+                   			    <img id=<%=i %> src="<%= request.getContextPath() + "/" + imageUrl %>" alt="Product Image" onclick="postDetail('<%= productID %>')">			
+                        <script>
+                            	function postDetail(productId) {
+                            		var url = '<%= request.getContextPath() %>/showProduct/postDetail.jsp?productID=' + productId;
+                            		window.location.href = url;
+                            	}
+                            </script>
+                <%
+                     i++;   }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        out.println("데이터 조회 중 오류가 발생했습니다: " + ex.getMessage());
+                    } finally {
+                        if (rs != null) rs.close();
+                        if (stmt != null) stmt.close();
+                        if (conn != null) conn.close();
+                    }
+                %>
     </a-assets>
 
     <!-- Image entity -->

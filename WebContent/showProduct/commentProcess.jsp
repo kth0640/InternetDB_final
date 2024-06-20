@@ -2,15 +2,22 @@
 <%@ page import="java.sql.*, java.io.*, java.util.*" %>
 <%@ page import="comment.CommentDAO" %>
 <%@ page import="comment.CommentDTO" %>   
-<!DOCTYPE html>
+
 <%
 request.setCharacterEncoding("UTF-8");
-String userID = null;
+%>
+
+<jsp:useBean id="commentDTO" class="comment.CommentDTO"/>
+<jsp:setProperty name="commentDTO" property="*"/>
+<!DOCTYPE html>
+<%
+
+String isLogin = null;
 if (session.getAttribute("userID") != null) {
-    userID = (String) session.getAttribute("userID");
+    isLogin = (String) session.getAttribute("userID");
 }
 
-if (userID == null) {
+if (isLogin == null) {
     PrintWriter script = response.getWriter();
     script.println("<script>");
     script.println("alert('로그인을 해주세요');");
@@ -20,11 +27,11 @@ if (userID == null) {
     return;
 }
 
-int productID = Integer.parseInt(request.getParameter("productID"));
-String content = request.getParameter("content");
+//int productID = Integer.parseInt(request.getParameter("productID"));
+//String content = request.getParameter("content");
 
 
-if (content == null || content.isEmpty()) {
+if (commentDTO.getContent() == null ) {
     PrintWriter script = response.getWriter();
     script.println("<script>");
     script.println("alert('댓글을 입력해주세요.');");
@@ -33,9 +40,10 @@ if (content == null || content.isEmpty()) {
     script.close();
     return;
 }
-System.out.println(productID + content + userID);
+System.out.println(commentDTO.getProductID() + commentDTO.getContent() + commentDTO.getUserID());
+
 CommentDAO commentDAO = new CommentDAO();
-int result = commentDAO.addComment(new CommentDTO(0, productID, content, userID));
+int result = commentDAO.addComment(commentDTO);
 
 if (result == -1) {
     PrintWriter script = response.getWriter();
@@ -48,7 +56,7 @@ if (result == -1) {
 } else {
     PrintWriter script = response.getWriter();
     script.println("<script>");
-    script.println("window.location.href ='postDetail.jsp?"+ productID +"';");
+    script.println("window.location.href ='postDetail.jsp?"+ commentDTO.getProductID() +"';");
     script.println("</script>");
     script.close();
 }
